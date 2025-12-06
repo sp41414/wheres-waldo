@@ -9,7 +9,7 @@ export default function useCharacters() {
         // TODO: Fetch characters to identify from the API
         alert("Placeholder: fetch characters data")
         // TODO: Also fetch the timer somehow (plan later)
-    })
+    }, [])
 
     return { characters, error, loading }
 }

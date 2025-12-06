@@ -3,12 +3,12 @@ import { useState, useEffect, useRef } from "react"
 export default function GameImage({ src, characterNames }) {
     const [visible, setVisible] = useState(false)
     const [relativeCoordinates, setRelativeCoordinates] = useState({ x: 0, y: 0 })
+    const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 })
     const dropdownRef = useRef(null)
     const imageRef = useRef(null)
 
     const clickHandler = (e) => {
         e.preventDefault()
-        setVisible(true)
 
         const rect = imageRef.current.getBoundingClientRect()
         const relativeX = (e.clientX - rect.left) / rect.width
@@ -19,10 +19,8 @@ export default function GameImage({ src, characterNames }) {
             y: relativeY * 100
         })
 
-        if (dropdownRef.current) {
-            dropdownRef.current.style.left = `${e.clientX}px`
-            dropdownRef.current.style.top = `${e.clientY}px`
-        }
+        setDropdownPosition({ x: e.clientX, y: e.clientY })
+        setVisible(true)
     }
 
     const identifyHandler = (e) => {
@@ -39,17 +37,9 @@ export default function GameImage({ src, characterNames }) {
             }
         }
 
-        if (dropdownRef.current) {
-            const stopProp = (e) => e.stopPropagation();
-            dropdownRef.current.addEventListener('click', stopProp);
-        }
-
         document.addEventListener('click', handleClickOutside)
         return () => {
             document.removeEventListener('click', handleClickOutside)
-            if (dropdownRef.current) {
-                dropdownRef.current.removeEventListener('click', (e) => e.stopPropagation());
-            }
         }
     }, [])
 
@@ -57,7 +47,7 @@ export default function GameImage({ src, characterNames }) {
         <main className="relative">
             <img ref={imageRef} src={src} className="cursor-crosshair" alt="find waldo" onClick={clickHandler}></img>
             {visible && (
-                <div ref={dropdownRef} className="fixed bg-neutral-800 border border-gray-200 rounded-md shadow-lg p-2 opacity-90">
+                <div ref={dropdownRef} className="fixed bg-neutral-800 border border-gray-200 rounded-md shadow-lg p-2 opacity-90" style={{ left: `${dropdownPosition.x}px`, top: `${dropdownPosition.y}px` }}>
                     <ul className="list-none p-0 m-0">
                         {characterNames.map((character) => {
                             return (

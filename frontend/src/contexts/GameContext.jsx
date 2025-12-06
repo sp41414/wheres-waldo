@@ -11,8 +11,8 @@ export function GameProvider({ children }) {
     const { characters, error, loading } = useCharacters()
 
     return (
-        <GameProvider.Provider value={{ characters, error, loading }}>
+        <GameContext.Provider value={{ characters, error, loading }}>
             {children}
-        </GameProvider.Provider>
+        </GameContext.Provider>
     )
 }
