@@ -23,9 +23,9 @@ export default function GameImage({ src, characterNames }) {
         setVisible(true)
     }
 
-    const identifyHandler = (e) => {
+    const identifyHandler = (character) => (e) => {
         e.stopPropagation()
-        alert(`Placeholder - Identified at X: ${relativeCoordinates.x.toFixed(2)}%, Y: ${relativeCoordinates.y.toFixed(2)}%`)
+        alert(`Placeholder - Identified ${character} at X: ${relativeCoordinates.x.toFixed(2)}%, Y: ${relativeCoordinates.y.toFixed(2)}%`)
         setVisible(false)
     }
 
@@ -51,7 +51,7 @@ export default function GameImage({ src, characterNames }) {
                     <ul className="list-none p-0 m-0">
                         {characterNames.map((character) => {
                             return (
-                                <li key={character} className="hover:bg-neutral-700 cursor-pointer p-2" onClick={identifyHandler}>Identify as {character}</li>
+                                <li key={character} className="hover:bg-neutral-700 cursor-pointer p-2" onClick={identifyHandler(character)}>Identify as {character}</li>
                             )
                         })}
                     </ul>
