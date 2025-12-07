@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 
-export default function GameImage({ src, characterNames }) {
+export default function GameImage({ src, characterNames = ["Waldo", "Wizard", "Odlaw", "Odlulu", "Wenda"] }) {
     const [visible, setVisible] = useState(false)
     const [relativeCoordinates, setRelativeCoordinates] = useState({ x: 0, y: 0 })
     const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 })
