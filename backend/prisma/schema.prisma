@@ -17,7 +17,8 @@ model User {
     id         Int    @id @default(autoincrement())
     username   String @unique
     time_taken Int
-    game      Game
+    game       Game   @relation(fields: [gameId], references: [id])
+    gameId     String
 }
 
 model Game {
@@ -25,15 +26,16 @@ model Game {
     characters       Characters[]
     imageBoardSource String
 
-    user   User? @relation(fields: [userId], references: [id])
-    userId Int?
+    users User[]
 }
 
 model Characters {
-    id          Int    @id @default(autoincrement())
+    id          Int     @id @default(autoincrement())
     name        String
     imageSource String
-    isFound Boolean @default(false)
+    XPosition   Float
+    YPosition   Float
+    isFound     Boolean @default(false)
 
     game   Game?   @relation(fields: [gameId], references: [id])
     gameId String?
