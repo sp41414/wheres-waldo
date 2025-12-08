@@ -1,4 +1,4 @@
-export default function NavBar({ characterNames = ["Waldo", "Wizard", "Odlaw", "Odlulu", "Wenda"] }) {
+export default function NavBar({ characterNames = ["Waldo", "Wizard", "Odlaw"] }) {
     return (
         <>
             <header className="p-4">
