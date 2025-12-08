@@ -5,11 +5,16 @@ const helmet = require('helmet')
 
 const app = express()
 
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    'http://localhost:5173',
+    'https://find-waldo.pages.dev'
+]
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true
+    origin: allowedOrigins,
 }))
 app.use(helmet())
 app.use("/api", require('./src/routes'))
