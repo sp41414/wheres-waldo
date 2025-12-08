@@ -47,11 +47,13 @@ export default function GameImage({ src, characterNames = ["Waldo", "Wizard", "O
         <main className="relative">
             <img ref={imageRef} src={src} className="cursor-crosshair" alt="find waldo" onClick={clickHandler}></img>
             {visible && (
-                <div ref={dropdownRef} className="fixed bg-neutral-800 border border-gray-200 rounded-md shadow-lg p-2 opacity-90" style={{ left: `${dropdownPosition.x}px`, top: `${dropdownPosition.y}px` }}>
+                <div ref={dropdownRef} className="fixed bg-neutral-800 border-2 border-cyan-400 rounded-md shadow-lg shadow-cyan-500 p-2 opacity-95" style={{ left: `${dropdownPosition.x}px`, top: `${dropdownPosition.y}px` }}>
                     <ul className="list-none p-0 m-0">
                         {characterNames.map((character) => {
                             return (
-                                <li key={character} className="hover:bg-neutral-700 cursor-pointer p-2" onClick={identifyHandler(character)}>Identify as {character}</li>
+                                <li key={character} className="hover:bg-cyan-900hover:text-cyan-300 cursor-pointer p-2 transition-colors rounded" onClick={identifyHandler(character)}>
+                                    Identify as {character}
+                                </li>
                             )
                         })}
                     </ul>
