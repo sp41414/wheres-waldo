@@ -6,22 +6,21 @@ async function main() {
         data: {
             imageBoardSource: 'https://i.redd.it/3azczwthxnne1.jpeg',
             characters: {
-                // TODO: Update character positions after finding them... oof...
                 create: [
                     {
                         name: 'Waldo',
-                        XPosition: 1,
-                        YPosition: 1,
+                        XPosition: 60,
+                        YPosition: 35,
                     },
                     {
                         name: 'Odlaw',
-                        XPosition: 8,
-                        YPosition: 8,
+                        XPosition: 10,
+                        YPosition: 33,
                     },
                     {
                         name: 'Wizard',
-                        XPosition: 14,
-                        YPosition: 14,
+                        XPosition: 26,
+                        YPosition: 33,
                     },
                 ],
             },
