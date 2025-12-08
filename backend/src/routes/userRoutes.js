@@ -5,10 +5,10 @@ const router = Router()
 // submit a score (time taken) after completing a game
 router.post('/score', userController.submitScore)
 
-// get a leaderboard for a specific game
-router.get('/leaderboard/:gameId', userController.getLeaderboard);
+// get leaderboard 
+router.get('/leaderboard', userController.getLeaderboard);
 
-// get a specific user by username's rank
-router.get('/rank/:gameId/:username', getUserRank);
+// get specific user by username's rank 
+router.get('/rank/:username', userController.getUserRank);
 
 module.exports = router

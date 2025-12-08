@@ -16,7 +16,7 @@ datasource db {
 model User {
     id         Int    @id @default(autoincrement())
     username   String @unique
-    time_taken Int
+    time_taken Float
     game       Game   @relation(fields: [gameId], references: [id])
     gameId     String
 }
@@ -30,12 +30,11 @@ model Game {
 }
 
 model Characters {
-    id          Int     @id @default(autoincrement())
-    name        String
+    id          Int    @id @default(autoincrement())
+    name        String @unique
     imageSource String
     XPosition   Float
     YPosition   Float
-    isFound     Boolean @default(false)
 
     game   Game?   @relation(fields: [gameId], references: [id])
     gameId String?

@@ -5,6 +5,7 @@ async function main() {
     await prisma.game.create({
         data: {
             imageBoardSource: '/images/wheres-waldo.jpg',
+            // TODO: Update
             characters: {
                 create: [
                     {
@@ -15,7 +16,6 @@ async function main() {
                     },
                     {
                         name: 'Odlaw',
-                        // TODO: Update
                         imageSource: null,
                         XPosition: null,
                         YPosition: null,
