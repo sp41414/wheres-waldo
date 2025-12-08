@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-    provider = "prisma-client"
+    provider = "prisma-client-js"
     output   = "../generated/prisma"
 }
 
@@ -30,11 +30,10 @@ model Game {
 }
 
 model Characters {
-    id          Int    @id @default(autoincrement())
-    name        String @unique
-    imageSource String
-    XPosition   Float
-    YPosition   Float
+    id        Int    @id @default(autoincrement())
+    name      String @unique
+    XPosition Float
+    YPosition Float
 
     game   Game?   @relation(fields: [gameId], references: [id])
     gameId String?

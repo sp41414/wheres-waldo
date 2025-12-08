@@ -2,13 +2,12 @@ const db = require('../db/prisma');
 
 const getGame = async (req, res, next) => {
     try {
-        const game = await prisma.game.findFirst({
+        const game = await db.game.findFirst({
             include: {
                 characters: {
                     select: {
                         id: true,
                         name: true,
-                        imageSource: true,
                         // dont send x/y pos to prevent cheating
                         // isFound is per session so
                     }
@@ -36,7 +35,7 @@ const getGame = async (req, res, next) => {
 const checkCharacter = async (req, res, next) => {
     try {
         const { characterName, x, y } = req.body;
-        const character = await prisma.characters.findUnique({
+        const character = await db.characters.findUnique({
             where: {
                 name: characterName
             }

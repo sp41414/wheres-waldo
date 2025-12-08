@@ -9,7 +9,7 @@ const submitScore = async (req, res, next) => {
         const timeTaken = (endTime - startTime) / 1000 // seconds, db stores floats so its alright if i dont Math.floor() it
 
         // get the game, should be the only one
-        const game = await prisma.game.findFirst()
+        const game = await db.game.findFirst()
 
         if (!game) {
             return res.status(404)
@@ -24,7 +24,7 @@ const submitScore = async (req, res, next) => {
             })
         }
 
-        const user = await prisma.user.create({
+        const user = await db.user.create({
             data: {
                 username,
                 time_taken: timeTaken,
@@ -44,7 +44,7 @@ const getLeaderboard = async (req, res, next) => {
     try {
         const limit = parseInt(req.query.limit) || 10
 
-        const leaderboard = await prisma.user.findMany({
+        const leaderboard = await db.user.findMany({
             orderBy: {
                 time_taken: 'asc',
             },
@@ -69,7 +69,7 @@ const getUserRank = async (req, res, next) => {
         const { username } = req.params;
 
         // get user's best time
-        const user = await prisma.user.findFirst({
+        const user = await db.user.findFirst({
             where: { username },
             orderBy: {
                 time_taken: 'asc'
@@ -85,7 +85,7 @@ const getUserRank = async (req, res, next) => {
             })
         }
 
-        const betterTimes = await prisma.user.count({
+        const betterTimes = await db.user.count({
             where: {
                 time_taken: {
                     lt: user.time_taken

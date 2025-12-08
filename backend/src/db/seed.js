@@ -1,30 +1,27 @@
-const { PrismaClient } = require('./generated/prisma');
-const prisma = new PrismaClient();
+require('dotenv').config()
+const prisma = require('./prisma')
 
 async function main() {
     await prisma.game.create({
         data: {
-            imageBoardSource: '/images/wheres-waldo.jpg',
-            // TODO: Update
+            imageBoardSource: 'https://i.redd.it/3azczwthxnne1.jpeg',
             characters: {
+                // TODO: Update character positions after finding them... oof...
                 create: [
                     {
                         name: 'Waldo',
-                        imageSource: null,
-                        XPosition: null,
-                        YPosition: null,
+                        XPosition: 1,
+                        YPosition: 1,
                     },
                     {
                         name: 'Odlaw',
-                        imageSource: null,
-                        XPosition: null,
-                        YPosition: null,
+                        XPosition: 8,
+                        YPosition: 8,
                     },
                     {
                         name: 'Wizard',
-                        imageSource: null,
-                        XPosition: null,
-                        YPosition: null,
+                        XPosition: 14,
+                        YPosition: 14,
                     },
                 ],
             },

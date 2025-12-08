@@ -1,24 +1,30 @@
-import { useState, createContext } from "react";
-import useCharacters from "../hooks/useCharacters";
+import { useState, createContext, useEffect } from "react";
 
 export const GameContext = createContext({
     game: null,
     characters: [],
     foundCharacters: [],
     startTime: null,
+    endTime: null,
     elapsedTime: 0,
     isComplete: false,
+    isPaused: false,
     error: null,
     loading: true,
-    startGame: () => { },
-    checkCharacter: () => { },
+    startGame: async () => { },
+    checkCharacter: async () => { },
+    resetGame: () => { },
+    pauseTimer: () => { },
+    resumeTimer: () => { },
 })
 
 export function GameProvider({ children }) {
     const [game, setGame] = useState(null)
     const [foundCharacters, setFoundCharacters] = useState([])
     const [startTime, setStartTime] = useState(null)
+    const [endTime, setEndTime] = useState(null)
     const [elapsedTime, setElapsedTime] = useState(0)
+    const [isPaused, setIsPaused] = useState(false)
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true)
 
@@ -36,7 +42,7 @@ export function GameProvider({ children }) {
     }, [])
 
     useEffect(() => {
-        if (!startTime) return
+        if (!startTime || isPaused) return
 
         const interval = setInterval(() => {
             setElapsedTime(Math.floor((Date.now() - startTime) / 1000))
@@ -72,7 +78,11 @@ export function GameProvider({ children }) {
             const data = await res.json()
 
             if (data.found && !foundCharacters.includes(characterId)) {
-                setFoundCharacters([...foundCharacters, characterId])
+                const newFound = [...foundCharacters, characterId]
+                setFoundCharacters(newFound)
+                if (newFound.length === game.characters.length) {
+                    setEndTime(Date.now())
+                }
             }
 
             return data.found
@@ -82,6 +92,17 @@ export function GameProvider({ children }) {
         }
     }
 
+    const resetGame = () => {
+        setFoundCharacters([])
+        setStartTime(null)
+        setEndTime(null)
+        setElapsedTime(0)
+        setIsPaused(false)
+    }
+
+    const pauseTimer = () => setIsPaused(true)
+    const resumeTimer = () => setIsPaused(false)
+
     const isComplete = game && foundCharacters.length === game.characters.length
 
     return (
@@ -90,12 +111,17 @@ export function GameProvider({ children }) {
             characters: game?.characters || [],
             foundCharacters,
             startTime,
+            endTime,
             elapsedTime,
             isComplete,
+            isPaused,
             error,
             loading,
             startGame,
             checkCharacter,
+            resetGame,
+            pauseTimer,
+            resumeTimer,
         }}>
             {children}
         </GameContext.Provider>
