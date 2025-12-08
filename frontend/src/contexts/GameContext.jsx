@@ -1,5 +1,6 @@
 import { useState, createContext, useEffect } from "react";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const GameContext = createContext({
     game: null,
     characters: [],
@@ -49,15 +50,14 @@ export function GameProvider({ children }) {
         }, 100)
 
         return () => clearInterval(interval)
-    }, [startTime])
+    }, [startTime, isPaused])
 
     const startGame = async () => {
         try {
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/game/start`, {
+            await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/game/start`, {
                 method: 'POST',
             })
-            const data = await res.json()
-            setStartTime(data.startTime)
+            setStartTime(Date.now())
         } catch (err) {
             setError(err.message)
         }
@@ -82,6 +82,7 @@ export function GameProvider({ children }) {
                 setFoundCharacters(newFound)
                 if (newFound.length === game.characters.length) {
                     setEndTime(Date.now())
+                    setIsPaused(true)
                 }
             }
 

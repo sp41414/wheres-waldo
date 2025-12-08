@@ -11,11 +11,11 @@ export default function App() {
     const [showComplete, setShowComplete] = useState(false)
 
     useEffect(() => {
-        if (isComplete && !showComplete) {
+        if (isComplete) {
             setShowComplete(true)
             pauseTimer()
         }
-    }, [isComplete, showComplete, pauseTimer])
+    }, [isComplete, pauseTimer])
 
     const handleCompleteClose = () => {
         setShowComplete(false)
